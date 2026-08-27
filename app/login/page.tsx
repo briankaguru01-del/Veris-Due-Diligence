@@ -6,10 +6,19 @@ import { createClient } from "@/lib/supabase/client";
 import { FormCard, Eyebrow } from "@/components/Card";
 import { Button } from "@/components/Button";
 
+const CALLBACK_ERROR_MESSAGE =
+  "That sign-in link didn't work — it may have expired or already been used. Request a new one below.";
+
+function getInitialError(): string | null {
+  if (typeof window === "undefined") return null;
+  const params = new URLSearchParams(window.location.search);
+  return params.get("error") === "auth_callback_failed" ? CALLBACK_ERROR_MESSAGE : null;
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(getInitialError);
   const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
@@ -21,7 +30,7 @@ export default function LoginPage() {
     const { error: authError } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
       },
     });
 
