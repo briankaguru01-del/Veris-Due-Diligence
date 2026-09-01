@@ -57,5 +57,7 @@ the main onboarding checklist.)
 
 No client's Supabase URL, keys, or n8n URLs should ever be committed into
 this repo. Every deployment gets its own values set directly in Vercel —
-never hardcoded, never checked into git. See the open question in chat
-about `.env.production` before onboarding the first real client.
+never hardcoded, never checked into git. (An earlier version of this repo
+committed one client's real values in `.env.production` as a convenience —
+that's been removed. Every deployment, including the very first one, must
+have all four variables set directly in its own Vercel project settings.)
