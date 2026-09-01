@@ -6,6 +6,11 @@ handles accounts, the dashboard, starting new deals, and displaying results.
 All document analysis happens in a separate n8n backend; this app only reads
 and writes to Supabase and calls two n8n webhooks.
 
+This repo is the single master template for every client — each client gets
+their own Supabase project, own n8n workflows, and own deployment of this
+same code, never a shared database. See [DEPLOYMENT.md](./DEPLOYMENT.md)
+for the step-by-step process to onboard a new client.
+
 ## Stack
 
 - Next.js (App Router) on Vercel
